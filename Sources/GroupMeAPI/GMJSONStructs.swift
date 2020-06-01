@@ -10,18 +10,18 @@ import Foundation
 
 // MARK: - Group
 public struct GMGroup: Codable {
-    let id, groupID, name, phoneNumber: String
-    let type: GMGroupType
-    let groupDescription: String?
-    let imageURL: String?
-    let creatorUserID: String
-    let createdAt, updatedAt: Int
-    let mutedUntil: Int?
-    let officeMode: Bool
-    let shareURL, shareQrCodeURL: String?
-    let members: [GMGroupMember]
-    let messages: GMGroup_Messages
-    let maxMembers: Int
+    public let id, groupID, name, phoneNumber: String
+    public let type: GMGroupType
+    public let groupDescription: String?
+    public let imageURL: String?
+    public let creatorUserID: String
+    public let createdAt, updatedAt: Int
+    public let mutedUntil: Int?
+    public let officeMode: Bool
+    public let shareURL, shareQrCodeURL: String?
+    public let members: [GMGroupMember]
+    public let messages: GMGroup_Messages
+    public let maxMembers: Int
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -49,12 +49,12 @@ enum GMGroupType: String, Codable {
 }
 
 public struct GMGroupMember: Codable {
-    let userID, nickname: String
-    let imageURL: String?
-    let id: String
-    let muted, autokicked: Bool
-    let roles: [GMGroupMember_Role]
-    let name: String
+    public let userID, nickname: String
+    public let imageURL: String?
+    public let id: String
+    public let muted, autokicked: Bool
+    public let roles: [GMGroupMember_Role]
+    public let name: String
     
     enum CodingKeys: String, CodingKey {
         case userID = "user_id"
@@ -71,10 +71,10 @@ enum GMGroupMember_Role: String, Codable {
 }
 
 public struct GMGroup_Messages: Codable {
-    let count: Int
-    let lastMessageID: String?
-    let lastMessageCreatedAt: Int?
-    let preview: GMGroup_Preview
+    public let count: Int
+    public let lastMessageID: String?
+    public let lastMessageCreatedAt: Int?
+    public let preview: GMGroup_Preview
     
     enum CodingKeys: String, CodingKey {
         case count
@@ -85,9 +85,9 @@ public struct GMGroup_Messages: Codable {
 }
 
 public struct GMGroup_Preview: Codable {
-    let nickname, text: String?
-    let imageURL: String?
-    let attachments: [GMAttachment]
+    public let nickname, text: String?
+    public let imageURL: String?
+    public let attachments: [GMAttachment]
     
     enum CodingKeys: String, CodingKey {
         case nickname, text
@@ -99,25 +99,25 @@ public struct GMGroup_Preview: Codable {
 
 // MARK: - Group Messages
 public struct GMResponseGroupMessages: Codable {
-    let count: Int
-    let messages: [GMGroupMessage]
+    public let count: Int
+    public let messages: [GMGroupMessage]
 }
 
 public struct GMGroupMessage: Codable {
-    let attachments: [GMAttachment]
-    let avatarURL: String?
-    let createdAt: Int
-    let favoritedBy: [String]
-    let groupID, id: String
-    let name: String
-    let senderID: String
-    let senderType: GMSenderType
-    let sourceGUID: String
-    let system: Bool
-    let text: String?
-    let userID: String
-    let platform: String
-    let event: GMGroupMessage_Event?
+    public let attachments: [GMAttachment]
+    public let avatarURL: String?
+    public let createdAt: Int
+    public let favoritedBy: [String]
+    public let groupID, id: String
+    public let name: String
+    public let senderID: String
+    public let senderType: GMSenderType
+    public let sourceGUID: String
+    public let system: Bool
+    public let text: String?
+    public let userID: String
+    public let platform: String
+    public let event: GMGroupMessage_Event?
     
     enum CodingKeys: String, CodingKey {
         case attachments
@@ -143,12 +143,12 @@ enum GMSenderType: String, Codable {
 
 // MARK: - GMAttachment
 public struct GMAttachment: Codable {
-    let charmap: [[Int]]?
-    let placeholder: String?
-    let type: String
-    let eventID, view, pollID: String?
-    let url: String?
-    let lat, lng, name: String?
+    public let charmap: [[Int]]?
+    public let placeholder: String?
+    public let type: String
+    public let eventID, view, pollID: String?
+    public let url: String?
+    public let lat, lng, name: String?
     
     enum CodingKeys: String, CodingKey {
         case charmap, placeholder, type
@@ -161,50 +161,50 @@ public struct GMAttachment: Codable {
 
 // MARK: - Special Attachments (events)
 public struct GMGroupMessage_Event: Codable {
-    let type: String
-    let data: GMGroupMessage_Event_Data
+    public let type: String
+    public let data: GMGroupMessage_Event_Data
 }
 
 public struct GMGroupMessage_Event_Data: Codable {
-    let event: GMGroupMessageEventTypeEvent?
-    let user: GMUser
-    let conversation: GMGroupMessage_Event_Data_Conversation?
-    let poll: GMGroupMessageEventTypePoll?
-    let url: String?
+    public let event: GMGroupMessageEventTypeEvent?
+    public let user: GMUser
+    public let conversation: GMGroupMessage_Event_Data_Conversation?
+    public let poll: GMGroupMessageEventTypePoll?
+    public let url: String?
 }
 
 public struct GMUser: Codable {
-    let id: String
-    let nickname: String
+    public let id: String
+    public let nickname: String
 }
 
 public struct GMGroupMessage_Event_Data_Conversation: Codable {
-    let id: String
+    public let id: String
 }
 
 // Event Attachment
 public struct GMGroupMessageEventTypeEvent: Codable {
-    let id, name: String
+    public let id, name: String
 }
 
 // Poll Attachment
 public struct GMGroupMessageEventTypePoll: Codable {
-    let id, subject: String
+    public let id, subject: String
 }
 
 public struct GroupMessagesResponse : Codable {
-    var count: Int
-    var messages: [GMGroupMessage]
+    public var count: Int
+    public var messages: [GMGroupMessage]
 }
 
 
 // MARK: - Private Chats
 public struct GMPrivateChat: Codable {
-    let createdAt: Int
-    let lastMessage: GMPrivateChat_LastMessage
-    let messagesCount: Int
-    let otherUser: GMPrivateChat_OtherUser
-    let updatedAt: Int
+    public let createdAt: Int
+    public let lastMessage: GMPrivateChat_LastMessage
+    public let messagesCount: Int
+    public let otherUser: GMPrivateChat_OtherUser
+    public let updatedAt: Int
     
     enum CodingKeys: String, CodingKey {
         case createdAt = "created_at"
@@ -216,13 +216,13 @@ public struct GMPrivateChat: Codable {
 }
 
 public struct GMPrivateChat_LastMessage: Codable {
-    let attachments: [GMAttachment]
-    let avatarURL: String
-    let conversationID: String
-    let createdAt: Int
-    let favoritedBy: [String]
-    let id, name, recipientID, senderID: String
-    let senderType, sourceGUID, text, userID: String
+    public let attachments: [GMAttachment]
+    public let avatarURL: String
+    public let conversationID: String
+    public let createdAt: Int
+    public let favoritedBy: [String]
+    public let id, name, recipientID, senderID: String
+    public let senderType, sourceGUID, text, userID: String
     
     enum CodingKeys: String, CodingKey {
         case attachments
@@ -241,8 +241,8 @@ public struct GMPrivateChat_LastMessage: Codable {
 }
 
 public struct GMPrivateChat_OtherUser: Codable {
-    let avatarURL: String
-    let id, name: String
+    public let avatarURL: String
+    public let id, name: String
     
     enum CodingKeys: String, CodingKey {
         case avatarURL = "avatar_url"
@@ -252,9 +252,9 @@ public struct GMPrivateChat_OtherUser: Codable {
 
 // MARK: - DirectMessages
 public struct GMDirectMessagesResponse: Codable {
-    let count: Int
-    let directMessages: [GMDirectMessage]
-    let readReceipt: GMReadReceipt
+    public let count: Int
+    public let directMessages: [GMDirectMessage]
+    public let readReceipt: GMReadReceipt
 
     enum CodingKeys: String, CodingKey {
         case count
@@ -265,19 +265,19 @@ public struct GMDirectMessagesResponse: Codable {
 
 // MARK: - GMDirectMessage
 public struct GMDirectMessage: Codable {
-    let attachments: [GMAttachment]
-    let avatarURL: String
-    let conversationID: String
-    let createdAt: Int
-    let favoritedBy: [String]
-    let id: String
-    let name: String
-    let recipientID, senderID: String
-    let senderType: GMSenderType
-    let sourceGUID: String
-    let text: String?
-    let userID: String
-    let event: GMGroupMessage_Event?
+    public let attachments: [GMAttachment]
+    public let avatarURL: String
+    public let conversationID: String
+    public let createdAt: Int
+    public let favoritedBy: [String]
+    public let id: String
+    public let name: String
+    public let recipientID, senderID: String
+    public let senderType: GMSenderType
+    public let sourceGUID: String
+    public let text: String?
+    public let userID: String
+    public let event: GMGroupMessage_Event?
 
     enum CodingKeys: String, CodingKey {
         case attachments
@@ -297,10 +297,10 @@ public struct GMDirectMessage: Codable {
 }
 
 public struct GMReadReceipt: Codable {
-    let id: String
-    let chatID: String
-    let messageID, userID: String
-    let readAt: Int
+    public let id: String
+    public let chatID: String
+    public let messageID, userID: String
+    public let readAt: Int
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -313,44 +313,44 @@ public struct GMReadReceipt: Codable {
 
 
 public struct GMResponseJoinGroup : Codable {
-    var group: GMGroup
+    public var group: GMGroup
 }
 
 public struct GMResponseAddMembers : Codable {
-    var results_id: String
+    public var results_id: String
 }
 
 public struct GMResponseMembershipResults : Codable {
-    var members: [GMResponseMembershipResults_Member]
+    public var members: [GMResponseMembershipResults_Member]
 }
 
 public struct GMResponseMembershipResults_Member : Codable {
-    var id: String
-    var user_id: String
-    var nickname: String
-    var muted: Bool
-    var image_url: String
-    var autokicked: Bool
-    var app_installed: Bool
-    var guid: String
+    public var id: String
+    public var user_id: String
+    public var nickname: String
+    public var muted: Bool
+    public var image_url: String
+    public var autokicked: Bool
+    public var app_installed: Bool
+    public var guid: String
 }
 
 // MARK: Current User
 public struct GMCurrentUser: Codable {
-    let createdAt: Int
-    let email: String
-    let facebookConnected: Bool
-    let id: String
-    let imageURL: String
-    let locale, name, phoneNumber: String
-    let sms, twitterConnected: Bool
-    let updatedAt: Int
-    let userID: String
-    let zipCode: String?
-    let shareURL, shareQrCodeURL: String
-    let mfa: GMMutliFactorAuthenticationData
-    let tags: [String]
-    let promptForSurvey, showAgeGate: Bool
+    public let createdAt: Int
+    public let email: String
+    public let facebookConnected: Bool
+    public let id: String
+    public let imageURL: String
+    public let locale, name, phoneNumber: String
+    public let sms, twitterConnected: Bool
+    public let updatedAt: Int
+    public let userID: String
+    public let zipCode: String?
+    public let shareURL, shareQrCodeURL: String
+    public let mfa: GMMutliFactorAuthenticationData
+    public let tags: [String]
+    public let promptForSurvey, showAgeGate: Bool
     
     enum CodingKeys: String, CodingKey {
         case createdAt = "created_at"
@@ -374,13 +374,13 @@ public struct GMCurrentUser: Codable {
 }
 
 public struct GMMutliFactorAuthenticationData: Codable {
-    let enabled: Bool
-    let channels: [GMMutliFactorAuthenticationChannel]
+    public let enabled: Bool
+    public let channels: [GMMutliFactorAuthenticationChannel]
 }
 
 public struct GMMutliFactorAuthenticationChannel: Codable {
-    let type: String
-    let createdAt: Int
+    public let type: String
+    public let createdAt: Int
     
     enum CodingKeys: String, CodingKey {
         case type
@@ -390,8 +390,8 @@ public struct GMMutliFactorAuthenticationChannel: Codable {
 
 // MARK: Blocks
 public struct GMBlock: Codable {
-    let userID, blockedUserID: String
-    let createdAt: Int
+    public let userID, blockedUserID: String
+    public let createdAt: Int
 
     enum CodingKeys: String, CodingKey {
         case userID = "user_id"
