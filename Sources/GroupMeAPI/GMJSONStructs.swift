@@ -43,7 +43,7 @@ public struct GMGroup: Codable {
     }
 }
 
-enum GMGroupType: String, Codable {
+public enum GMGroupType: String, Codable {
     case closed = "closed"
     case typePrivate = "private"
 }
@@ -64,7 +64,7 @@ public struct GMGroupMember: Codable {
     }
 }
 
-enum GMGroupMember_Role: String, Codable {
+public enum GMGroupMember_Role: String, Codable {
     case admin = "admin"
     case owner = "owner"
     case user = "user"
@@ -135,7 +135,7 @@ public struct GMGroupMessage: Codable {
     }
 }
 
-enum GMSenderType: String, Codable {
+public enum GMSenderType: String, Codable {
     case system = "system"
     case user = "user"
     case service = "service"
