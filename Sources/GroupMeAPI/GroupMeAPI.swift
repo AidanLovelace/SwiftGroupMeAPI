@@ -9,7 +9,7 @@
 import Foundation
 import Promises
 
-class GroupMeAPI : GroupMeAPIProtocol {
+public class GroupMeAPI : GroupMeAPIProtocol {
     
     let token: String
     

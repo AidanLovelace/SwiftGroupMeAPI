@@ -9,7 +9,7 @@
 import Foundation
 
 // MARK: - Group
-struct GMGroup: Codable {
+public struct GMGroup: Codable {
     let id, groupID, name, phoneNumber: String
     let type: GMGroupType
     let groupDescription: String?
@@ -48,7 +48,7 @@ enum GMGroupType: String, Codable {
     case typePrivate = "private"
 }
 
-struct GMGroupMember: Codable {
+public struct GMGroupMember: Codable {
     let userID, nickname: String
     let imageURL: String?
     let id: String
@@ -70,7 +70,7 @@ enum GMGroupMember_Role: String, Codable {
     case user = "user"
 }
 
-struct GMGroup_Messages: Codable {
+public struct GMGroup_Messages: Codable {
     let count: Int
     let lastMessageID: String?
     let lastMessageCreatedAt: Int?
@@ -84,7 +84,7 @@ struct GMGroup_Messages: Codable {
     }
 }
 
-struct GMGroup_Preview: Codable {
+public struct GMGroup_Preview: Codable {
     let nickname, text: String?
     let imageURL: String?
     let attachments: [GMAttachment]
@@ -98,12 +98,12 @@ struct GMGroup_Preview: Codable {
 
 
 // MARK: - Group Messages
-struct GMResponseGroupMessages: Codable {
+public struct GMResponseGroupMessages: Codable {
     let count: Int
     let messages: [GMGroupMessage]
 }
 
-struct GMGroupMessage: Codable {
+public struct GMGroupMessage: Codable {
     let attachments: [GMAttachment]
     let avatarURL: String?
     let createdAt: Int
@@ -142,7 +142,7 @@ enum GMSenderType: String, Codable {
 }
 
 // MARK: - GMAttachment
-struct GMAttachment: Codable {
+public struct GMAttachment: Codable {
     let charmap: [[Int]]?
     let placeholder: String?
     let type: String
@@ -160,12 +160,12 @@ struct GMAttachment: Codable {
 }
 
 // MARK: - Special Attachments (events)
-struct GMGroupMessage_Event: Codable {
+public struct GMGroupMessage_Event: Codable {
     let type: String
     let data: GMGroupMessage_Event_Data
 }
 
-struct GMGroupMessage_Event_Data: Codable {
+public struct GMGroupMessage_Event_Data: Codable {
     let event: GMGroupMessageEventTypeEvent?
     let user: GMUser
     let conversation: GMGroupMessage_Event_Data_Conversation?
@@ -173,33 +173,33 @@ struct GMGroupMessage_Event_Data: Codable {
     let url: String?
 }
 
-struct GMUser: Codable {
+public struct GMUser: Codable {
     let id: String
     let nickname: String
 }
 
-struct GMGroupMessage_Event_Data_Conversation: Codable {
+public struct GMGroupMessage_Event_Data_Conversation: Codable {
     let id: String
 }
 
 // Event Attachment
-struct GMGroupMessageEventTypeEvent: Codable {
+public struct GMGroupMessageEventTypeEvent: Codable {
     let id, name: String
 }
 
 // Poll Attachment
-struct GMGroupMessageEventTypePoll: Codable {
+public struct GMGroupMessageEventTypePoll: Codable {
     let id, subject: String
 }
 
-struct GroupMessagesResponse : Codable {
+public struct GroupMessagesResponse : Codable {
     var count: Int
     var messages: [GMGroupMessage]
 }
 
 
 // MARK: - Private Chats
-struct GMPrivateChat: Codable {
+public struct GMPrivateChat: Codable {
     let createdAt: Int
     let lastMessage: GMPrivateChat_LastMessage
     let messagesCount: Int
@@ -215,7 +215,7 @@ struct GMPrivateChat: Codable {
     }
 }
 
-struct GMPrivateChat_LastMessage: Codable {
+public struct GMPrivateChat_LastMessage: Codable {
     let attachments: [GMAttachment]
     let avatarURL: String
     let conversationID: String
@@ -240,7 +240,7 @@ struct GMPrivateChat_LastMessage: Codable {
     }
 }
 
-struct GMPrivateChat_OtherUser: Codable {
+public struct GMPrivateChat_OtherUser: Codable {
     let avatarURL: String
     let id, name: String
     
@@ -251,7 +251,7 @@ struct GMPrivateChat_OtherUser: Codable {
 }
 
 // MARK: - DirectMessages
-struct GMDirectMessagesResponse: Codable {
+public struct GMDirectMessagesResponse: Codable {
     let count: Int
     let directMessages: [GMDirectMessage]
     let readReceipt: GMReadReceipt
@@ -264,7 +264,7 @@ struct GMDirectMessagesResponse: Codable {
 }
 
 // MARK: - GMDirectMessage
-struct GMDirectMessage: Codable {
+public struct GMDirectMessage: Codable {
     let attachments: [GMAttachment]
     let avatarURL: String
     let conversationID: String
@@ -296,7 +296,7 @@ struct GMDirectMessage: Codable {
     }
 }
 
-struct GMReadReceipt: Codable {
+public struct GMReadReceipt: Codable {
     let id: String
     let chatID: String
     let messageID, userID: String
@@ -312,19 +312,19 @@ struct GMReadReceipt: Codable {
 }
 
 
-struct GMResponseJoinGroup : Codable {
+public struct GMResponseJoinGroup : Codable {
     var group: GMGroup
 }
 
-struct GMResponseAddMembers : Codable {
+public struct GMResponseAddMembers : Codable {
     var results_id: String
 }
 
-struct GMResponseMembershipResults : Codable {
+public struct GMResponseMembershipResults : Codable {
     var members: [GMResponseMembershipResults_Member]
 }
 
-struct GMResponseMembershipResults_Member : Codable {
+public struct GMResponseMembershipResults_Member : Codable {
     var id: String
     var user_id: String
     var nickname: String
@@ -336,7 +336,7 @@ struct GMResponseMembershipResults_Member : Codable {
 }
 
 // MARK: Current User
-struct GMCurrentUser: Codable {
+public struct GMCurrentUser: Codable {
     let createdAt: Int
     let email: String
     let facebookConnected: Bool
@@ -373,12 +373,12 @@ struct GMCurrentUser: Codable {
     }
 }
 
-struct GMMutliFactorAuthenticationData: Codable {
+public struct GMMutliFactorAuthenticationData: Codable {
     let enabled: Bool
     let channels: [GMMutliFactorAuthenticationChannel]
 }
 
-struct GMMutliFactorAuthenticationChannel: Codable {
+public struct GMMutliFactorAuthenticationChannel: Codable {
     let type: String
     let createdAt: Int
     
@@ -389,7 +389,7 @@ struct GMMutliFactorAuthenticationChannel: Codable {
 }
 
 // MARK: Blocks
-struct GMBlock: Codable {
+public struct GMBlock: Codable {
     let userID, blockedUserID: String
     let createdAt: Int
 
