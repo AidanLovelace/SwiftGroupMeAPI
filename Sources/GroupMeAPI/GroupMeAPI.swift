@@ -13,33 +13,33 @@ public class GroupMeAPI : GroupMeAPIProtocol {
     
     let token: String
     
-    init(token: String) {
+    public init(token: String) {
         self.token = token
     }
     
     // MARK: Groups
-    func getGroups() -> Promise<[GMGroup]> {
+    public func getGroups() -> Promise<[GMGroup]> {
         let request = URLRequest(url: genURI(endpoint: "/groups"))
         
         return promiseRequest(request: request)
             .then { try JSONDecoder().decode(GMJSONResponse<[GMGroup]>.self, from: $0) }
             .then { $0.response! }
     }
-    func getFormerGroups() -> Promise<[GMGroup]> {
+    public func getFormerGroups() -> Promise<[GMGroup]> {
         let request = URLRequest(url: genURI(endpoint: "/groups/former"))
         
         return promiseRequest(request: request)
             .then { try JSONDecoder().decode(GMJSONResponse<[GMGroup]>.self, from: $0) }
             .then { $0.response! }
     }
-    func getGroup(withId group: String) -> Promise<GMGroup> {
+    public func getGroup(withId group: String) -> Promise<GMGroup> {
         let request = URLRequest(url: genURI(endpoint: "/groups/\(group)"))
         
         return promiseRequest(request: request)
             .then { try JSONDecoder().decode(GMJSONResponse<GMGroup>.self, from: $0) }
             .then { $0.response! }
     }
-    func createGroup(name: String, share: Bool = false, image_url: String? = nil) -> Promise<GMGroup> {
+    public func createGroup(name: String, share: Bool = false, image_url: String? = nil) -> Promise<GMGroup> {
         let requestBody = GMRequestCreateGroup(name: name, share: share, image_url: image_url)
         return Promise
             { try JSONEncoder().encode(requestBody) }
@@ -48,7 +48,7 @@ public class GroupMeAPI : GroupMeAPIProtocol {
             .then { try JSONDecoder().decode(GMJSONResponse<GMGroup>.self, from: $0) }
             .then { $0.response! }
     }
-    func updateGroup(withId group: String, name: String? = nil, description: String? = nil, image_url: String? = nil, office_mode: Bool? = nil, share: Bool? = nil) -> Promise<GMGroup> {
+    public func updateGroup(withId group: String, name: String? = nil, description: String? = nil, image_url: String? = nil, office_mode: Bool? = nil, share: Bool? = nil) -> Promise<GMGroup> {
         let requestBody = GMRequestUpdateGroup(name: name, description: description, image_url: image_url, office_mode: office_mode, share: share)
         return Promise
             { try JSONEncoder().encode(requestBody) }
@@ -57,13 +57,13 @@ public class GroupMeAPI : GroupMeAPIProtocol {
             .then { try JSONDecoder().decode(GMJSONResponse<GMGroup>.self, from: $0) }
             .then { $0.response! }
     }
-    func destroyGroup(withId group: String) -> Promise<Data> {
+    public func destroyGroup(withId group: String) -> Promise<Data> {
         var request = URLRequest(url: genURI(endpoint: "/groups/\(group)/destroy"))
         request.httpMethod = "POST"
         
         return promiseRequest(request: request)
     }
-    func joinGroup(withId group: String, andShareToken shareToken: String) -> Promise<GMGroup> {
+    public func joinGroup(withId group: String, andShareToken shareToken: String) -> Promise<GMGroup> {
         var request = URLRequest(url: genURI(endpoint: "/groups/\(group)/join/\(shareToken)"))
         request.httpMethod = "POST"
         return promiseRequest(request: request)
@@ -71,7 +71,7 @@ public class GroupMeAPI : GroupMeAPIProtocol {
             .then { $0.response! }
             .then { $0.group }
     }
-    func rejoinGroup(withId group: String) -> Promise<GMGroup> {
+    public func rejoinGroup(withId group: String) -> Promise<GMGroup> {
         let requestBody = GMRequestRejoinGroup(group_id: group)
         return Promise
             { try JSONEncoder().encode(requestBody) }
@@ -84,7 +84,7 @@ public class GroupMeAPI : GroupMeAPIProtocol {
     // TODO: Implement changing group owners
     
     // MARK: Group Membership
-    func addMembers(_ members: [GMRequestAddMembers_NewMember], toGroup group: String) -> Promise<GMResponseAddMembers> {
+    public func addMembers(_ members: [GMRequestAddMembers_NewMember], toGroup group: String) -> Promise<GMResponseAddMembers> {
         let requestBody = GMRequestAddMembers(members: members)
         return Promise
             { try JSONEncoder().encode(requestBody) }
@@ -93,19 +93,19 @@ public class GroupMeAPI : GroupMeAPIProtocol {
             .then { try JSONDecoder().decode(GMJSONResponse<GMResponseAddMembers>.self, from: $0) }
             .then { $0.response! }
     }
-    func getMembershipResults(withId results_id: String, forGroup group: String) -> Promise<Any> {
+    public func getMembershipResults(withId results_id: String, forGroup group: String) -> Promise<Any> {
         let request = URLRequest(url: genURI(endpoint: "/groups/\(group)/members/results/\(results_id)"))
         
         return promiseRequest(request: request)
             .then { try JSONDecoder().decode(GMJSONResponse<GMResponseAddMembers/*DOES NOT WORK; CREATE RESULTS!!!!!!!*/>.self, from: $0) }
     }
-    func removeMember(withId membershipId: String, fromGroup group: String) -> Promise<Data> {
+    public func removeMember(withId membershipId: String, fromGroup group: String) -> Promise<Data> {
         var request = URLRequest(url: genURI(endpoint: "/groups/\(group)/members/\(membershipId)/remove"))
         request.httpMethod = "POST"
         
         return promiseRequest(request: request)
     }
-    func updateNickname(to newNickname: String, forGroup group: String) -> Promise<GMGroupMember> {
+    public func updateNickname(to newNickname: String, forGroup group: String) -> Promise<GMGroupMember> {
         let requestBody = GMRequestUpdateMembership(membership: GMMembership(nickname: newNickname))
         return Promise
             { try JSONEncoder().encode(requestBody) }
@@ -117,7 +117,7 @@ public class GroupMeAPI : GroupMeAPIProtocol {
     }
     
     // MARK: Messages
-    func getMessages(forGroup group: String, beforeMessage: String?, sinceMessage: String?, afterMessage: String?, withLimit limit: Int) -> Promise<[GMGroupMessage]> {
+    public func getMessages(forGroup group: String, beforeMessage: String?, sinceMessage: String?, afterMessage: String?, withLimit limit: Int) -> Promise<[GMGroupMessage]> {
         let request = URLRequest(url: genURI(endpoint: "/groups/\(group)/messages"))
         
         return promiseRequest(request: request)
@@ -125,7 +125,7 @@ public class GroupMeAPI : GroupMeAPIProtocol {
             .then ( groupmeResponseErrorCheck )
             .then { $0.response!.messages }
     }
-    func createMessage(inGroup group: String, withText text: String, withAttachments attachments: [GMAttachment]) -> Promise<GMGroupMessage> {
+    public func createMessage(inGroup group: String, withText text: String, withAttachments attachments: [GMAttachment]) -> Promise<GMGroupMessage> {
         let requestBody = GMRequestCreateMessage(message: GMRequestCreateMessage_message(
             source_guid: UUID().uuidString,
             text: text,
@@ -142,7 +142,7 @@ public class GroupMeAPI : GroupMeAPIProtocol {
     }
     
     // MARK: Chats
-    func getChats() -> Promise<[GMPrivateChat]> {
+    public func getChats() -> Promise<[GMPrivateChat]> {
         let request = URLRequest(url: genURI(endpoint: "/chats"))
         
         return promiseRequest(request: request)
@@ -151,7 +151,7 @@ public class GroupMeAPI : GroupMeAPIProtocol {
     }
     
     // MARK: Direct Messages
-    func getDirectMessages(forUser user: String, beforeMessage: String?, sinceMessage: String?) -> Promise<[GMDirectMessage]> {
+    public func getDirectMessages(forUser user: String, beforeMessage: String?, sinceMessage: String?) -> Promise<[GMDirectMessage]> {
         var queryItems = [ URLQueryItem(name: "other_user_id", value: user) ]
         if let beforeMessage = beforeMessage {
             queryItems.append(URLQueryItem(name: "before_id", value: beforeMessage))
@@ -166,7 +166,7 @@ public class GroupMeAPI : GroupMeAPIProtocol {
             .then { try JSONDecoder().decode(GMJSONResponse<[GMDirectMessage]>.self, from: $0) }
             .then { $0.response! }
     }
-    func createDirectMessage(toUser user: String, withText text: String, withAttachments attachments: [GMAttachment]) -> Promise<GMDirectMessage> {
+    public func createDirectMessage(toUser user: String, withText text: String, withAttachments attachments: [GMAttachment]) -> Promise<GMDirectMessage> {
         let requestBody = GMRequestCreateDirectMessage(direct_message: GMRequestCreateMessage_message(
             source_guid: UUID().uuidString,
             text: text,
@@ -182,13 +182,13 @@ public class GroupMeAPI : GroupMeAPIProtocol {
     }
     
     // MARK: Likes
-    func likeMessage(withId messageId: String, inConversation conversationId: String) -> Promise<Data> {
+    public func likeMessage(withId messageId: String, inConversation conversationId: String) -> Promise<Data> {
         var request = URLRequest(url: genURI(endpoint: "/messages/\(conversationId)/\(messageId)/like"))
         request.httpMethod = "POST"
         
         return promiseRequest(request: request)
     }
-    func unlikeMessage(withId messageId: String, inConversation conversationId: String) -> Promise<Data> {
+    public func unlikeMessage(withId messageId: String, inConversation conversationId: String) -> Promise<Data> {
         var request = URLRequest(url: genURI(endpoint: "/messages/\(conversationId)/\(messageId)/like"))
         request.httpMethod = "POST"
         
@@ -196,7 +196,7 @@ public class GroupMeAPI : GroupMeAPIProtocol {
     }
     
     // MARK: Leaderboard
-    func topLikedMessages(inGroup group: String, forPeriod period: LeaderboardPeriod) -> Promise<[GMGroupMessage]> {
+    public func topLikedMessages(inGroup group: String, forPeriod period: LeaderboardPeriod) -> Promise<[GMGroupMessage]> {
         let queryItems = [ URLQueryItem(name: "period", value: period.rawValue) ]
         let request = URLRequest(url: genURI(endpoint: "/groups/\(group)/likes", queryItems: queryItems))
         
@@ -204,14 +204,14 @@ public class GroupMeAPI : GroupMeAPIProtocol {
             .then { try JSONDecoder().decode(GMJSONResponse<GMResponseLeaderboard>.self, from: $0) }
             .then { $0.response!.messages }
     }
-    func currentUserLikes(inGroup group: String) -> Promise<[GMGroupMessage]> {
+    public func currentUserLikes(inGroup group: String) -> Promise<[GMGroupMessage]> {
         let request = URLRequest(url: genURI(endpoint: "/groups/\(group)/likes/mine"))
         
         return promiseRequest(request: request)
             .then { try JSONDecoder().decode(GMJSONResponse<GMResponseLeaderboard>.self, from: $0) }
             .then { $0.response!.messages }
     }
-    func currentUserHits(inGroup group: String) -> Promise<[GMGroupMessage]> {
+    public func currentUserHits(inGroup group: String) -> Promise<[GMGroupMessage]> {
         let request = URLRequest(url: genURI(endpoint: "/groups/\(group)/likes/for_me"))
         
         return promiseRequest(request: request)
@@ -220,7 +220,7 @@ public class GroupMeAPI : GroupMeAPIProtocol {
     }
     
     // MARK: Users
-    func getCurrentUser() -> Promise<GMCurrentUser> {
+    public func getCurrentUser() -> Promise<GMCurrentUser> {
         let request = URLRequest(url: genURI(endpoint: "/users/me"))
         
         return promiseRequest(request: request)
@@ -229,7 +229,7 @@ public class GroupMeAPI : GroupMeAPIProtocol {
             .then { $0.response! }
         
     }
-    func updateCurrentUser(avatar: String?, name: String?, email: String?, zipCode: String?) -> Promise<GMCurrentUser> {
+    public func updateCurrentUser(avatar: String?, name: String?, email: String?, zipCode: String?) -> Promise<GMCurrentUser> {
         let requestBody = GMRequestUpdateUser(avatar_url: avatar, name: name, email: email, zip_code: zipCode)
         return Promise
             { try JSONEncoder().encode(requestBody) }
@@ -241,14 +241,14 @@ public class GroupMeAPI : GroupMeAPIProtocol {
     }
     
     // MARK: SMS Mode
-    func enableSMS(forHours duration: Int, andDisablePushOnDeviceWithClientId registrationId: String) -> Promise<Data> {
+    public func enableSMS(forHours duration: Int, andDisablePushOnDeviceWithClientId registrationId: String) -> Promise<Data> {
         let requestBody = GMRequestEnableSMSMode(duration: duration, registration_id: registrationId)
         return Promise
             { try JSONEncoder().encode(requestBody) }
             .then { jsonPostRequest(self.genURI(endpoint: "/users/sms_mode"), body: $0) }
             .then { promiseRequest(request: $0) }
     }
-    func disableSMS() -> Promise<Data> {
+    public func disableSMS() -> Promise<Data> {
         var request = URLRequest(url: genURI(endpoint: "/users/sms_mode/delete"))
         request.httpMethod = "POST"
         
@@ -256,7 +256,7 @@ public class GroupMeAPI : GroupMeAPIProtocol {
     }
     
     // MARK: Blocks
-    func getBlockedUsers(for user: String) -> Promise<[GMBlock]> {
+    public func getBlockedUsers(for user: String) -> Promise<[GMBlock]> {
         let queryItems = [ URLQueryItem(name: "user", value: user) ]
         let request = URLRequest(url: genURI(endpoint: "/blocks", queryItems: queryItems))
         
@@ -264,7 +264,7 @@ public class GroupMeAPI : GroupMeAPIProtocol {
             .then { try JSONDecoder().decode(GMJSONResponse<GMResponseBlocks>.self, from: $0) }
             .then { $0.response!.blocks }
     }
-    func blockBetween(me currentUser: String, and otherUser: String) -> Promise<Bool> {
+    public func blockBetween(me currentUser: String, and otherUser: String) -> Promise<Bool> {
         let queryItems = [
             URLQueryItem(name: "user", value: currentUser),
             URLQueryItem(name: "otherUser", value: otherUser)
@@ -275,7 +275,7 @@ public class GroupMeAPI : GroupMeAPIProtocol {
             .then { try JSONDecoder().decode(GMJSONResponse<GMResponseBlockBetween>.self, from: $0) }
             .then { $0.response!.between }
     }
-    func createBlock(between currentUser: String, and otherUser: String) -> Promise<GMBlock> {
+    public func createBlock(between currentUser: String, and otherUser: String) -> Promise<GMBlock> {
         let queryItems = [
             URLQueryItem(name: "user", value: currentUser),
             URLQueryItem(name: "otherUser", value: otherUser)
@@ -286,7 +286,7 @@ public class GroupMeAPI : GroupMeAPIProtocol {
             .then { try JSONDecoder().decode(GMJSONResponse<GMResponseCreateBlock>.self, from: $0) }
             .then { $0.response!.block }
     }
-    func removeBlock(between currentUser: String, and otherUser: String) -> Promise<Data> {
+    public func removeBlock(between currentUser: String, and otherUser: String) -> Promise<Data> {
         let queryItems = [
             URLQueryItem(name: "user", value: currentUser),
             URLQueryItem(name: "otherUser", value: otherUser)
@@ -330,7 +330,7 @@ fileprivate func jsonPostRequest(_ url: URL, body: Data) -> Promise<URLRequest> 
     }
 }
 
-enum GroupMeAPIError: Error {
+public enum GroupMeAPIError: Error {
     case noResponseData
     case groupMeErrors(errors: [String])
 }

@@ -41,7 +41,7 @@ struct GMRequestAddMembers : GMRequest {
     var members: [GMRequestAddMembers_NewMember]
 }
 
-struct GMRequestAddMembers_NewMember : GMRequest {
+public struct GMRequestAddMembers_NewMember : GMRequest {
     var nickname: String
     var user_id: String?
     var phone_number: String?

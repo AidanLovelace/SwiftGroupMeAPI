@@ -261,7 +261,7 @@ protocol GroupMeAPIProtocol {
     func removeBlock(between currentUser: String, and otherUser: String) -> Promise<Data>
 }
 
-enum LeaderboardPeriod : String {
+public enum LeaderboardPeriod : String {
     case day = "day"
     case week = "week"
     case month = "month"
